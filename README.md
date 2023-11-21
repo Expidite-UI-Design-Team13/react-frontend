@@ -2,9 +2,9 @@
 
 Assuming you have npm already installed
 
-Make sure your database and api (see flask-backend) are up and running. \n\n
+Make sure your database and api (see flask-backend) are up and running. 
 
-You may need to wake the database up by running. I usually just run one of the select all queries from the DataGrip console. \n\n
+You may need to wake the database up by running. I usually just run one of the select all queries from the DataGrip console. 
 
 ### `npm i`
 
@@ -14,7 +14,7 @@ To install all packages
 
 To start react app
 
-------------------------------------------------- \n
+------------------------------------------------------------------------------
 
 # Getting Started with Create React App
 
