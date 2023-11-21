@@ -4,7 +4,7 @@ Assuming you have npm already installed
 
 Make sure your database and api (see flask-backend) are up and running. 
 
-You may need to wake the database up by running. I usually just run one of the select all queries from the DataGrip console. 
+You may need to wake the database up. I usually just run one of the select all queries from the DataGrip console. 
 
 ### `npm i`
 
