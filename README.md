@@ -18,6 +18,8 @@ To start react app
 
 Using MUI as the component library: https://mui.com/material-ui/
 
+Also using MUI icons for simplicity: https://mui.com/material-ui/material-icons/
+
 Click Get Started -> Menu on top left corner -> Navigate to the different Components to see how to use them.
 
 Make sure your app is opened in Google Chrome.
