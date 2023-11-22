@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
 import { Header } from "../components/Header";
 import { Button } from "@mui/material";
@@ -17,8 +17,9 @@ export function Profile(props) {
             })
 
             const data = await res.json()
-            console.log(data.access_token)
+            //console.log(data.access_token)
             props.removeToken()
+            props.removeId()
         } catch (error) {
             if (error.response) {
                 console.log(error.response)
@@ -36,13 +37,17 @@ export function Profile(props) {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + props.token
-                }
+                },
+                body: JSON.stringify({
+                    id: props.id
+                })
             })
 
             const data = await res.json()
-            console.log(data.access_token)
-            props.setToken(data.access_token)
+            props.setToken(props.token)
+            props.setId(props.id)
             setUser(data)
+
         } catch (error) {
             if (error.response) {
                 console.log(error.response)
@@ -52,11 +57,17 @@ export function Profile(props) {
         }   
     }
 
+    useEffect(() => {
+        getUser();
+    }, [])
+
     return (
         <div>
             <Header title="Profile" />
             <NavBar tab="profile" />
             <Button variant="contained" sx={{backgroundColor: "#89B0AE"}} onClick={logout}>Logout</Button>
+            <p>username: {user.username}</p>
+            <p>email: {user.email}</p>
         </div>
     );
 }

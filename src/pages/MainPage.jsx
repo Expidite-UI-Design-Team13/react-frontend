@@ -6,20 +6,22 @@ import { ItemCard } from '../components/ItemCard';
 export function MainPage(props) {
     const [items, setItems] = useState([])
 
-    const fetchInfo = async () => { 
+    const fetchItems = async () => { 
         // TODO: replace user id with authentication user id 
         // need to do user login and signup
 
         try {
-            const res = await fetch(`http://127.0.0.1:5000/api/items/1`, {
-                method: 'GET',
+            const res = await fetch(`http://127.0.0.1:5000/api/items`, {
+                method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + props.token
-                }
+                },
+                body: JSON.stringify({
+                    user_id: props.id
+                })
             })
-
             const data = await res.json()
             setItems(data);
         } catch (error) {
@@ -32,7 +34,7 @@ export function MainPage(props) {
     }
 
     useEffect(() => {
-        fetchInfo();
+        fetchItems();
     }, [])
 
     //console.log(items) 
