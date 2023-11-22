@@ -14,6 +14,23 @@ To install all packages
 
 To start react app
 
+## Development Tools
+
+Using MUI as the component library: https://mui.com/material-ui/
+
+Click Get Started -> Menu on top left corner -> Navigate to the different Components to see how to use them.
+
+Make sure your app is opened in Google Chrome.
+
+Click menu on top right corner -> More Tools -> Developer Tools
+![Dev Tools](images/Screenshot1.png)
+
+Click device icon on top to change from laptop to mobile screen
+![Change Device](images/Screenshot2.png)
+
+Let's all use iPhone 14 Pro Max for consistency!
+![iPhone 14](images/Screenshot3.png)
+
 ------------------------------------------------------------------------------
 
 # Getting Started with Create React App
