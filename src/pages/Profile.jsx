@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
 import { Header } from "../components/Header";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export function Profile(props) {
     const [user, setUser] = useState(null)
+    const navigate = useNavigate();
 
     const logout = async () => {
         try {
@@ -20,6 +22,7 @@ export function Profile(props) {
             //console.log(data.access_token)
             props.removeToken()
             props.removeId()
+            navigate("/")
         } catch (error) {
             if (error.response) {
                 console.log(error.response)
@@ -58,7 +61,7 @@ export function Profile(props) {
     }
 
     useEffect(() => {
-        getUser();
+        getUser()
     }, [])
 
     return (
@@ -66,8 +69,12 @@ export function Profile(props) {
             <Header title="Profile" />
             <NavBar tab="profile" />
             <Button variant="contained" sx={{backgroundColor: "#89B0AE"}} onClick={logout}>Logout</Button>
-            <p>username: {user.username}</p>
-            <p>email: {user.email}</p>
+            {user && (
+                <div>
+                    <p>email: {user.email}</p>
+                    <p>username: {user.username}</p>
+                </div>
+            )}
         </div>
     );
 }
