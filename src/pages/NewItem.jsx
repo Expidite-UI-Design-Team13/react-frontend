@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavBar } from "../components/NavBar";
 import { Header } from "../components/Header";
 import { 
@@ -20,6 +20,9 @@ export function NewItem(props) {
     const [expirationDate, setExpirationDate] = useState('');
     const [productionDate, setProductionDate] = useState('');
     const [alertDays, setAlertDays] = useState('');
+
+    const [categories, setCategories] = useState([]);
+    const [locations, setLocations] = useState([]);
 
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedLocations, setSelectedLocations] = useState([]);
@@ -64,6 +67,69 @@ export function NewItem(props) {
         }
     }
 
+    const fetchOptions = async () => { 
+        // TODO: replace user id with authentication user id 
+        // need to do user login and signup
+
+        try {
+            const categoriesRes = await fetch(`http://127.0.0.1:5000/api/categories`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + props.token
+                },
+                body: JSON.stringify({
+                    user_id: props.id
+                })
+            })
+            const categoriesData = await categoriesRes.json()
+            const categoriesArray = []
+            
+            for (let i = 0; i < categoriesData.length; i++)
+                categoriesArray.push(categoriesData[i]["category"])
+
+            setCategories(categoriesArray);
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response)
+                console.log(error.response.status)
+                console.log(error.response.headers)
+            }
+        }  
+        
+        try {
+            const locationsRes = await fetch(`http://127.0.0.1:5000/api/locations`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + props.token
+                },
+                body: JSON.stringify({
+                    user_id: props.id
+                })
+            })
+            const locationsData = await locationsRes.json()
+            const locationsArray = []
+            
+            for (let i = 0; i < locationsData.length; i++)
+                locationsArray.push(locationsData[i]["location"])
+
+            setLocations(locationsArray);
+        } catch (error) {
+            if (error.response) {
+                console.log(error.response)
+                console.log(error.response.status)
+                console.log(error.response.headers)
+            }
+        } 
+    }
+
+    useEffect(() => {
+        fetchOptions();
+    }, [])
+
     return (
         <div>
             <Header title="New Item" />
@@ -92,7 +158,7 @@ export function NewItem(props) {
                                 <Box sx={{fontSize: '18px', color: '#2A2E38'}}>Category:</Box>
                                 <Box>
                                     <ButtonDropDown
-                                        items={["food", "medicine", "skincare"]}
+                                        items={categories}
                                         selectedItems={selectedCategories}
                                         setSelectedItems={setSelectedCategories}
                                     />
@@ -105,7 +171,7 @@ export function NewItem(props) {
                                 <Box sx={{fontSize: '18px', color: '#2A2E38'}}>Location:</Box>
                                 <Box>
                                     <ButtonDropDown
-                                        items={["kitchen", "bathroom", "pantry"]}
+                                        items={locations}
                                         selectedItems={selectedLocations}
                                         setSelectedItems={setSelectedLocations}
                                     />
