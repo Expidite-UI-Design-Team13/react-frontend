@@ -55,22 +55,22 @@ export default function App() {
     <ThemeProvider theme={light ? themeLight : themeDark}>
       <CssBaseline />
       <BrowserRouter>
-          {!token && token!=="" && token !== undefined?
-            <Routes>
-              <Route path="/" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />
-              <Route path="/login" element={<Login token={token} setToken={setToken} id={id} setId={setId} />} />    
-              <Route path="/signup" element={<Signup token={token} setToken={setToken} id={id} setId={setId} />} />    
-              <Route path="/add" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />    
-              <Route path="/profile" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />            
-            </Routes>  
-          :(
+        {!token && token !== "" && token !== undefined ?
+          <Routes>
+            <Route path="/" element={<MainPage token={token} setToken={setToken} id={id} setId={setId} />} />
+            <Route path="/login" element={<Login token={token} setToken={setToken} id={id} setId={setId} />} />
+            <Route path="/signup" element={<Signup token={token} setToken={setToken} id={id} setId={setId} />} />
+            <Route path="/add" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />
+            <Route path="/profile" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />
+          </Routes>
+          : (
             <Routes>
               <Route path="/" element={<MainPage token={token} setToken={setToken} id={id} setId={setId} />} />
-              <Route path="/add" element={<NewItem token={token} setToken={setToken} id={id} setId={setId} />} />
+              <Route path="/add" element={<AddItem token={token} setToken={setToken} id={id} setId={setId} />} />
               <Route path="/profile" element={<Profile removeToken={removeToken} removeId={removeId} token={token} setToken={setToken} id={id} setId={setId} />} />
             </Routes>
           )}
-        
+
       </BrowserRouter>
     </ThemeProvider>
   );

@@ -15,28 +15,6 @@ export function Header({ title }) {
             padding: '3%', // Top and bottom padding
             zIndex: 1100, // Ensure the header is above other content
         }}>
-            {/* Status bar */}
-            <Box style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                padding: '0 10px', // Padding on the sides
-                fontSize: '18px', // Smaller font size for status bar items
-                fontFamily: 'Lato, sans-serif'
-            }}>
-                <span style={{ fontWeight: 'bold' }}>
-                    19:02
-                </span> {/* Time */}
-                <Box style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px', // Space between icons
-                }}>
-                    <SignalCellularAltIcon fontSize="medium" />
-                    <WifiIcon fontSize="medium" />
-                    <BatteryFullIcon fontSize="medium" />
-                </Box>
-            </Box>
             {/* Page Title */}
             <Box style={{
                 display: 'flex',
@@ -44,9 +22,9 @@ export function Header({ title }) {
                 marginTop: '15px',
             }}>
                 <span style={{
-                    fontSize: '36px',
+                    fontSize: '26px',
                     fontFamily: 'Lato, sans-serif',
-                    marginLeft: '6px',
+                    marginLeft: '10px',
                 }}>
                     {title}
                 </span>
