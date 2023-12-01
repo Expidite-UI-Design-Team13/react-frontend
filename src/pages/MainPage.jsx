@@ -37,7 +37,8 @@ export function MainPage(props) {
         fetchItems();
     }, [])
 
-    //console.log(items) 
+    console.log(props.token)
+    console.log(items) 
 
     return (
         <div>
