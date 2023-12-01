@@ -14,6 +14,8 @@ export function Header({ title }) {
             backgroundColor: '#BEE3DB',
             padding: '3%', // Top and bottom padding
             zIndex: 1100, // Ensure the header is above other content
+            fontFamily: `'Lato', 'sans-serif'`,
+            color: '#555B6E'
         }}>
             {/* Page Title */}
             <Box style={{
