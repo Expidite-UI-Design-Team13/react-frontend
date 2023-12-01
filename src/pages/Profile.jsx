@@ -62,7 +62,7 @@ export function Profile(props) {
 
     useEffect(() => {
         getUser()
-    }, [])
+    }, [getUser])
 
     return (
         <div>

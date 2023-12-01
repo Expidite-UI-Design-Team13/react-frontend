@@ -4,7 +4,7 @@ import { MainPage } from './pages/MainPage';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useState } from 'react';
-import { AddItem } from './pages/AddItem';
+import { NewItem } from './pages/NewItem';
 import { Profile } from './pages/Profile';
 import { Login } from './components/Login';
 import { Signup } from './components/Signup';
@@ -17,7 +17,12 @@ const themeLight = createTheme({
     background: {
       default: '#ffffff',
       secondary: "#BEE3DB"
-    }
+    },
+    primary: {
+      main: "#BEE3DB", //this overide blue color
+      light: "#FAF9F9", //overides light blue
+      dark: "#89B0AE", //overides dark blue color
+    },
   }
 });
 
@@ -29,6 +34,12 @@ const themeDark = createTheme({
     text: {
       primary: "#ffffff"
     }
+  },
+  typography: {
+    "fontFamily": `"Lato", sans-serif`
+   },
+   menuPaper: {
+    maxHeight: 100
   }
 });
 
@@ -55,7 +66,7 @@ export default function App() {
           :(
             <Routes>
               <Route path="/" element={<MainPage token={token} setToken={setToken} id={id} setId={setId} />} />
-              <Route path="/add" element={<AddItem token={token} setToken={setToken} id={id} setId={setId} />} />
+              <Route path="/add" element={<NewItem token={token} setToken={setToken} id={id} setId={setId} />} />
               <Route path="/profile" element={<Profile removeToken={removeToken} removeId={removeId} token={token} setToken={setToken} id={id} setId={setId} />} />
             </Routes>
           )}
