@@ -32,8 +32,10 @@ export function Signup(props) {
                 })
 
                 const data = await res.json()
-                console.log(data.access_token)
+                //console.log(data.access_token)
                 props.setToken(data.access_token)
+                props.setId(data.id)
+
                 navigate("/");
             }
         } catch (error) {
