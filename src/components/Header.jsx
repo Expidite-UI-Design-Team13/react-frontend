@@ -7,7 +7,7 @@ export function Header({ title }) {
         // The `div` is no longer necessary unless it serves other purposes not shown here.
         // The `Box` component is used directly as the outermost element.
         <Box style={{
-            position: 'sticky', // Fix the position relative to the viewport, make sure the header does not overlap with page content
+            position: 'fixed', // Fix the position relative to the viewport
             top: 0, // Align to the top of the viewport
             left: 0, // Align to the left of the viewport
             right: 0, // Align to the right of the viewport

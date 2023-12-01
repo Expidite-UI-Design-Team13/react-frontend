@@ -135,7 +135,7 @@ export function NewItem(props) {
             <Header title="New Item" />
             <NavBar tab="add" />
             <div>
-                <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ mt: 2, paddingLeft: '15px', paddingRight: '15px', fontFamily: "'Lato', sans-serif", fontSize: '18px' }}>
+                <Box component="form" noValidate autoComplete="off" onSubmit={handleSubmit} sx={{ mt: 2, paddingLeft: '15px', paddingRight: '15px', paddingTop: 9, paddingBottom: 0.7, fontFamily: "'Lato', sans-serif", fontSize: '18px' }}>
                     <Box sx={{ padding: '15px', paddingTop: "0px", border: 3, borderColor: "#BEE3DB", borderRadius: 2, boxShadow: 5, backgroundColor: "#FAF9F9" }}>
                         <Stack direction="row" spacing={2} sx={{paddingTop: '10px', paddingBottom: '10px'}}>
                             <Box sx={{fontSize: '18px', color: '#2A2E38', paddingTop: "6px"}}>Name:</Box>

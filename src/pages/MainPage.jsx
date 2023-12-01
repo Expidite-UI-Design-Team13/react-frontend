@@ -12,6 +12,7 @@ import '../styles/MainPage.css';
 
 export function MainPage(props) {
     const [items, setItems] = useState([]);
+    const [value, setValue] = React.useState(0);
 
     // To be replaced with data from database.items
     const testItems = [

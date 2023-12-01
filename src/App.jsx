@@ -66,7 +66,7 @@ export default function App() {
           : (
             <Routes>
               <Route path="/" element={<MainPage token={token} setToken={setToken} id={id} setId={setId} />} />
-              <Route path="/add" element={<AddItem token={token} setToken={setToken} id={id} setId={setId} />} />
+              <Route path="/add" element={<NewItem token={token} setToken={setToken} id={id} setId={setId} />} />
               <Route path="/profile" element={<Profile removeToken={removeToken} removeId={removeId} token={token} setToken={setToken} id={id} setId={setId} />} />
             </Routes>
           )}
