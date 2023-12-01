@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
 import { Header } from "../components/Header";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 export function Profile(props) {
@@ -68,13 +68,15 @@ export function Profile(props) {
         <div>
             <Header title="Profile" />
             <NavBar tab="profile" />
-            <Button variant="contained" sx={{backgroundColor: "#89B0AE"}} onClick={logout}>Logout</Button>
-            {user && (
-                <div>
-                    <p>email: {user.email}</p>
-                    <p>username: {user.username}</p>
-                </div>
-            )}
+            <Box sx={{paddingTop: 10.5, paddingBottom: 0.7}}>
+                <Button variant="contained" sx={{backgroundColor: "#89B0AE"}} onClick={logout}>Logout</Button>
+                {user && (
+                    <div>
+                        <p>email: {user.email}</p>
+                        <p>username: {user.username}</p>
+                    </div>
+                )}
+            </Box>
         </div>
     );
 }
