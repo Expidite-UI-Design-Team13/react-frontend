@@ -1,0 +1,42 @@
+.main-page {
+    font-family: 'Lato', sans-serif;
+    color: #555B6E;
+}
+
+.item-title {
+    padding-top: 10px;
+    font-family: 'Lato', sans-serif;
+}
+
+.item-avatar {
+    border: solid 3px;
+    border-color: #BEE3DB;
+    align-content: center;
+    margin: auto;
+}
+
+.item-avatar-pink {
+    border: solid 3px;
+    border-color: #FFD6BA;
+    align-content: center;
+    margin: auto;
+}
+
+.item-card {
+    border: solid 3px;
+    border-color: #BEE3DB;
+}
+
+.item-card-pink {
+    border: solid 3px;
+    border-color: #FFD6BA;
+}
+
+.select-filter-text {
+    font-family: 'Lato', sans-serif;
+    color: #555B6E;
+}
+
+.search-icon {
+    transform: scale(2.8)
+}

@@ -10,17 +10,14 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import HomeIcon from '@mui/icons-material/Home';
 import '../styles/NavBar.css';
-
-export function NavBar({tab}) {
+export function NavBar({ tab }) {
     const [value, setValue] = useState(0);
     const [homeColor, setHomeColor] = useState("#555B6E");
     const [addColor, setAddColor] = useState("#555B6E");
     const [profileColor, setProfileColor] = useState("#555B6E");
-
     useEffect(() => {
         changeColor();
     }, [tab]);
-
     function changeColor() {
         if (tab == "home") {
             setHomeColor("white");
@@ -38,36 +35,34 @@ export function NavBar({tab}) {
             setProfileColor("white");
         }
     }
-
     return (
         <div>
-            <Box style={{ width: '100%'}}>
-            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-                <BottomNavigation
-                    value={value}
-                    onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}
-                    //class='navbar'
-                    style={{backgroundColor: '#BEE3DB', width: '100%', paddingTop: '45px', paddingBottom: '45px'}}
-                >
-                    
+            <Box style={{ width: '100%' }}>
+                <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+                    <BottomNavigation
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }}
+                        //class='navbar'
+                        style={{ backgroundColor: '#BEE3DB', width: '100%', paddingTop: '9%', paddingBottom: '9%' }}
+                    >
                         <BottomNavigationAction icon={
                             <Link href="/" >
-                                <HomeIcon style={{color: homeColor}} fontSize='large' />
+                                <HomeIcon style={{ color: homeColor, width: '40px', height: '40px' }} />
                             </Link>
                         } />
                         <BottomNavigationAction icon={
                             <Link href="/add">
-                                <AddCircleOutlineIcon style={{color: addColor}} fontSize='large' />
+                                <AddCircleOutlineIcon style={{ color: addColor, width: '40px', height: '40px' }} />
                             </Link>
                         } />
                         <BottomNavigationAction icon={
                             <Link href="/profile">
-                                <PersonOutlineIcon style={{color: profileColor}} fontSize='large' />
+                                <PersonOutlineIcon style={{ color: profileColor, width: '40px', height: '40px' }} />
                             </Link>
                         } />
-                </BottomNavigation>
+                    </BottomNavigation>
                 </Paper>
             </Box>
         </div>

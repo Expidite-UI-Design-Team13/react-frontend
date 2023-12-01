@@ -2,58 +2,67 @@ import React, { useState, useEffect } from 'react';
 import { NavBar } from "../components/NavBar";
 import { Header } from "../components/Header";
 import { ItemCard } from '../components/ItemCard';
-import {
-    AppBar, Toolbar, Typography, IconButton, Button, Grid, Card, CardActionArea,
-    CardMedia, CardContent, BottomNavigation, BottomNavigationAction,
-    Container, Box, Select, MenuItem
-} from '@mui/material';
-import { Add as AddIcon, Restore as RestoreIcon, Favorite as FavoriteIcon, LocationOn as LocationOnIcon, MoreVert as MoreVertIcon } from '@mui/icons-material';
+import { LocationFilter } from '../components/LocationFilter';
+import { CategoryFilter } from '../components/CategoryFilter';
+import { Sort } from '../components/Sort';
+import Stack from '@mui/material/Stack';
+import { Grid, Container } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import '../styles/MainPage.css';
 
 export function MainPage(props) {
     const [items, setItems] = useState([]);
     const [value, setValue] = React.useState(0);
 
-    // REMOVE LATER
+    // To be replaced with data from database.items
     const testItems = [
         {
-            name: "Lactose-free milk",
-            expiration_date: "2023-12-18",
-            image: './milk.png'
+            name: "Blueberries",
+            days_to_expire: "1",
+            shelf_life: "15",
+            image: 'blueberries.png'
         },
         {
-            name: "Lactose-free milk",
-            expiration_date: "2023-12-18",
-            image: "./milk.png"
+            name: "Lactose free milk",
+            days_to_expire: "2",
+            shelf_life: "15",
+            image: "milk.png"
         },
         {
-            name: "Lactose-free milk",
-            expiration_date: "2023-12-18",
-            image: "./milk.png"
+            name: "Baby spinich",
+            days_to_expire: "12",
+            shelf_life: "14",
+            image: "baby_spinach.png"
         },
         {
-            name: "Lactose-free milk",
-            expiration_date: "2023-12-18",
-            image: "./milk.png"
+            name: "Bagel",
+            days_to_expire: "23",
+            shelf_life: "30",
+            image: "bagel.png"
         },
         {
-            name: "Lactose-free milk",
-            expiration_date: "2023-12-18",
-            image: "./milk.png"
+            name: "Tylenol",
+            days_to_expire: "30",
+            shelf_life: "365",
+            image: "tylenol.png"
         },
         {
-            name: "Lactose-free milk",
-            expiration_date: "2023-12-18",
-            image: "./milk.png"
+            name: "Eye cream",
+            days_to_expire: "180",
+            shelf_life: "365",
+            image: "eye_cream.png"
         },
         {
-            name: "Lactose-free milk",
-            expiration_date: "2023-12-18",
-            image: "./milk.png"
+            name: "Yogurt",
+            days_to_expire: "5",
+            shelf_life: "7",
+            image: "yogurt.png"
         },
         {
-            name: "Lactose-free milk",
-            expiration_date: "2023-12-18",
-            image: "./milk.png"
+            name: "Apple",
+            days_to_expire: "7",
+            shelf_life: "10",
+            image: "apple.png"
         },
     ]
 
@@ -89,29 +98,27 @@ export function MainPage(props) {
     }, [])
 
     return (
-        <Container maxWidth="xs" sx={{ pb: 7 }}> {/* This maxWidth matches the device width */}
-            <AppBar position="static" color="default" elevation={0}>
-                <Toolbar>
-                    <Select value="location" sx={{ mr: 1 }}>
-                        <MenuItem value="location">Location</MenuItem>
-                    </Select>
-                    <Select value="category" sx={{ mr: 1 }}>
-                        <MenuItem value="category">Category</MenuItem>
-                    </Select>
-                    <Select value="sort" sx={{ mr: 1 }}>
-                        <MenuItem value="sort">Sort</MenuItem>
-                    </Select>
-                </Toolbar>
-            </AppBar>
-            <br />
+        <Container className="main-page" maxWidth="xs" sx={{ pb: 7 }}> {/* This maxWidth matches the device width */}
+            <Header title="Track your products" />
+            {/* filters */}
+            <Stack direction="row" justify="flex-end" sx={{ paddingTop: 10.5, paddingBottom: 0.7 }}>
+                <LocationFilter />
+                <CategoryFilter />
+                <Sort />
+                <div>
+                    <SearchIcon className="search-icon" sx={{ paddingLeft: 0.1, paddingTop: 1.5, color: "#555B6E" }} />
+                </div>
+            </Stack>
 
-            <Grid container spacing={2}>
+            {/* Display items */}
+            <Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingLeft={0}>
                 {testItems.map((product, index) => (
                     <Grid item xs={6} key={index}>
                         <ItemCard product={product} />
                     </Grid>
                 ))}
             </Grid>
+            <NavBar tab="home" />
         </Container>
     );
 }
