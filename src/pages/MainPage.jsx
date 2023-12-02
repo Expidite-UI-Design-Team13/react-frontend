@@ -17,50 +17,50 @@ export function MainPage(props) {
     const testItems = [
         {
             name: "Blueberries",
-            days_to_expire: "1",
-            shelf_life: "15",
+            expiration_date: "2023-12-05",
+            production_date: "2023-11-25",
             image: 'blueberries.png'
         },
         {
             name: "Lactose free milk",
-            days_to_expire: "2",
-            shelf_life: "15",
+            expiration_date: "2023-12-04",
+            production_date: "2023-11-30",
             image: "milk.png"
         },
         {
             name: "Baby spinich",
-            days_to_expire: "12",
-            shelf_life: "14",
+            expiration_date: "2023-12-23",
+            production_date: "2023-12-01",
             image: "baby_spinach.png"
         },
         {
             name: "Bagel",
-            days_to_expire: "23",
-            shelf_life: "30",
+            expiration_date: "2023-12-19",
+            production_date: "2023-12-04",
             image: "bagel.png"
         },
         {
             name: "Tylenol",
-            days_to_expire: "30",
-            shelf_life: "365",
+            expiration_date: "2024-12-05",
+            production_date: "2022-12-05",
             image: "tylenol.png"
         },
         {
             name: "Eye cream",
-            days_to_expire: "180",
-            shelf_life: "365",
+            expiration_date: "2024-01-02",
+            production_date: "2023-05-12",
             image: "eye_cream.png"
         },
         {
             name: "Yogurt",
-            days_to_expire: "5",
-            shelf_life: "7",
+            expiration_date: "2023-12-10",
+            production_date: "2023-11-26",
             image: "yogurt.png"
         },
         {
             name: "Apple",
-            days_to_expire: "7",
-            shelf_life: "10",
+            expiration_date: "2023-12-28",
+            production_date: "2023-11-20",
             image: "apple.png"
         },
     ]
@@ -110,13 +110,14 @@ export function MainPage(props) {
             </Stack>
 
             {/* Display items */}
-            {items.length > 0 ? (items.map((product, index) => (
+            
                 <Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingLeft={0}>
+                {items.length > 0 ? (items.map((product, index) => (
                     <Grid item xs={6} key={index}>
                         <ItemCard product={product} />
                     </Grid>
+                ))): (<Typography sx={{marginTop: '50%', marginLeft: '8%', display: 'flex'}}>You have no items. Please add an item by clicking the (+) buuton in the navigation</Typography>)}
                 </Grid>
-            ))): (<Typography sx={{marginTop: '50%', marginLeft: '8%', display: 'flex'}}>You have no items. Please add an item by clicking the (+) buuton in the navigation</Typography>)}
             <NavBar tab="home" />
         </Container>
     );
