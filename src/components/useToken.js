@@ -15,7 +15,7 @@ function useToken() {
   };
 
   function removeToken() {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setToken(null);
   }
 

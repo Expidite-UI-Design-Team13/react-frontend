@@ -6,13 +6,12 @@ import { LocationFilter } from '../components/LocationFilter';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { Sort } from '../components/Sort';
 import Stack from '@mui/material/Stack';
-import { Grid, Container } from '@mui/material';
+import { Grid, Container, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import '../styles/MainPage.css';
 
 export function MainPage(props) {
     const [items, setItems] = useState([]);
-    const [value, setValue] = React.useState(0);
 
     // To be replaced with data from database.items
     const testItems = [
@@ -111,13 +110,13 @@ export function MainPage(props) {
             </Stack>
 
             {/* Display items */}
-            <Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingLeft={0}>
-                {items.map((product, index) => (
+            {items.length > 0 ? (items.map((product, index) => (
+                <Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingLeft={0}>
                     <Grid item xs={6} key={index}>
                         <ItemCard product={product} />
                     </Grid>
-                ))}
-            </Grid>
+                </Grid>
+            ))): (<Typography sx={{marginTop: '50%', marginLeft: '8%', display: 'flex'}}>You have no items. Please add an item by clicking the (+) buuton in the navigation</Typography>)}
             <NavBar tab="home" />
         </Container>
     );

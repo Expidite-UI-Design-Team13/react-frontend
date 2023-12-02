@@ -47,9 +47,9 @@ export function Profile(props) {
             })
 
             const data = await res.json()
-            props.setToken(props.token)
-            props.setId(props.id)
-            setUser(data)
+            //props.setToken(props.token)
+            //props.setId(props.id)
+            //setUser(data)
 
         } catch (error) {
             if (error.response) {
