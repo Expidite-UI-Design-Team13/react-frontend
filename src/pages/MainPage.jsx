@@ -112,7 +112,7 @@ export function MainPage(props) {
 
             {/* Display items */}
             <Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingLeft={0}>
-                {testItems.map((product, index) => (
+                {items.map((product, index) => (
                     <Grid item xs={6} key={index}>
                         <ItemCard product={product} />
                     </Grid>
