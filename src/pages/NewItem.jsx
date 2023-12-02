@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { NavBar } from "../components/NavBar";
 import { Header } from "../components/Header";
 import { 
@@ -9,14 +9,16 @@ import {
     Stack,
     MenuItem,
     Select,
+    IconButton,
  } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import { ButtonDropDown } from '../components/ButtonDropDown';
 import { useNavigate } from 'react-router-dom';
+import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
 
 export function NewItem(props) {
     const [name, setName] = useState('');
-    const [picture, setPicture] = useState('');
+    const [image, setImage] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
     const [productionDate, setProductionDate] = useState('');
     const [alertDays, setAlertDays] = useState('');
@@ -27,7 +29,7 @@ export function NewItem(props) {
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedLocations, setSelectedLocations] = useState([]);
 
-    //const [alertDaysOptions, setAlertDaysOptions] = useState([])
+    const fileInput = useRef();
 
     const navigate = useNavigate();
 
@@ -35,6 +37,9 @@ export function NewItem(props) {
         e.preventDefault()
         let categoriesString = selectedCategories.map((category) => category).join(',');
         let locationsString = selectedLocations.map((location) => location).join(',');
+
+        if (image == '')
+            setImage('no_image.png')
 
         try {
             const res = await fetch('http://127.0.0.1:5000/api/items/add', {
@@ -51,7 +56,8 @@ export function NewItem(props) {
                     category: categoriesString,
                     location: locationsString,
                     production_date: productionDate,
-                    alert_days: alertDays
+                    alert_days: alertDays,
+                    image: image
                 })
             })
 
@@ -147,11 +153,33 @@ export function NewItem(props) {
                                 onChange={e => setName(e.target.value)}
                             />
                         </Stack>
-                        <Stack direction="row" spacing={2} alignItems="center" sx={{ mt: 1 }}>
+                        <Stack direction="row" spacing={2} alignItems="top" sx={{ mt: 0 }}>
                             <Box sx={{fontSize: '18px', color: '#2A2E38'}}>Picture:</Box>
-                            <Box sx={{backgroundColor: "#D9D9D9", width: '97px', height: '125px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <AddIcon fontSize='large'/>
-                            </Box>
+                            {image === ''  ? (
+                                <IconButton onClick={() => {
+                                    fileInput.current.click(); 
+                                }}>
+                                    <Box sx={{backgroundColor: "#D9D9D9", width: '97px', height: '125px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <AddIcon fontSize='large' />
+                                    </Box>
+                                </IconButton>
+                            ): 
+                            (                                
+                                <Box sx={{backgroundColor: "#D9D9D9", display: 'flex', alignItems: "center"}}>
+                                    <HighlightOffRoundedIcon  
+                                        sx={{ color: '#555B6E', fontSize: '16px', position: 'absolute', marginLeft: 14.5, marginBottom: 15.5}}
+                                        onClick={() => setImage('')}
+                                        />
+                                    <img src={require(`../components/images/${image}`)} width='100%' height='125px'/>
+                                </Box>
+                            )}
+                            <input
+                                type="file"
+                                hidden
+                                accept="image/*"
+                                ref={fileInput} 
+                                onChange={() => setImage(fileInput.current.files[0].name)}
+                            />
                         </Stack>
                         <FormControl>
                             <Stack direction="row" spacing={1.5} alignItems="center" sx={{paddingTop: '10px', paddingBottom: '10px'}}>
