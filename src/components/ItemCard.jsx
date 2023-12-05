@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -16,7 +16,7 @@ export function ItemCard({ product }) {
     const diffDays = Math.round((expirationDate - currentDate) / oneDay);
 
     const productionDate = new Date(product.production_date);
-    const shelfLife =  Math.round(Math.abs((expirationDate - productionDate) / oneDay));
+    const shelfLife = Math.round(Math.abs((expirationDate - productionDate) / oneDay));
 
     if (diffDays < 2) {
         return (
@@ -35,8 +35,8 @@ export function ItemCard({ product }) {
                         borderRadius: 2,
                     }} />
                     <Typography color="#555B6E" align="center" fontFamily={"'Lato', sans-serif"} sx={{ fontSize: 10 }}>
-                        {diffDays < 0 ? (`Expired ${Math.abs(diffDays)} days ago`): (`Expires in ${diffDays} day`)}
-                        
+                        {diffDays < 0 ? (`Expired ${Math.abs(diffDays)} days ago`) : (`Expires in ${diffDays} day`)}
+
                     </Typography>
 
                     <Stack direction="row" justifyContent="end">
@@ -51,7 +51,7 @@ export function ItemCard({ product }) {
             <Typography className="item-title" color="#555B6E" align="center" gutterBottom="true" variant="subtitle1" fontFamily={"'Lato', sans-serif"} component="div">
                 {product.name}
             </Typography>
-            <Avatar className="item-avatar" alt={product.name} src={require(`./images/${product.image}`)} sx={{ width: 62, height: 62 }} />
+            <Avatar className="item-avatar" alt={product.name} src={(product.image === null) ? require(`./images/no_image.png`) : require(`./images/${product.image}`)} sx={{ width: 62, height: 62 }} />
             <CardContent>
                 <LinearProgress variant="determinate" value={100 * (diffDays / shelfLife)} align="center" sx={{
                     backgroundColor: '#D9D9D9',

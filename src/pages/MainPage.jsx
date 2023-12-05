@@ -110,14 +110,19 @@ export function MainPage(props) {
             </Stack>
 
             {/* Display items */}
-            
-                <Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingLeft={0}>
-                {items.length > 0 ? (items.map((product, index) => (
-                    <Grid item xs={6} key={index}>
-                        <ItemCard product={product} />
-                    </Grid>
-                ))): (<Typography sx={{marginTop: '50%', marginLeft: '8%', display: 'flex'}}>You have no items. Please add an item by clicking the (+) buuton in the navigation</Typography>)}
-                </Grid>
+            {
+                (items.length == 0 || items === null) ?
+                    (<Typography sx={{ marginTop: '50%', marginLeft: '8%', display: 'flex' }}>You have no items. Please add an item by clicking the (+) button in the navigation</Typography>)
+                    :
+                    (<Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingLeft={0}>
+                        {items.map((product, index) => (
+                            <Grid item xs={6} key={index}>
+                                <ItemCard product={product} />
+                            </Grid>
+                        ))}
+                    </Grid>)
+            }
+
             <NavBar tab="home" />
         </Container>
     );
