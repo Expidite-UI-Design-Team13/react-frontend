@@ -37,8 +37,8 @@ const themeDark = createTheme({
   },
   typography: {
     "fontFamily": `"Lato", sans-serif`
-   },
-   menuPaper: {
+  },
+  menuPaper: {
     maxHeight: 100
   }
 });
@@ -67,6 +67,8 @@ export default function App() {
             <Routes>
               <Route path="/" element={<MainPage token={token} setToken={setToken} id={id} setId={setId} />} />
               <Route path="/add" element={<NewItem token={token} setToken={setToken} id={id} setId={setId} />} />
+              <Route path="/login" element={<Login token={token} setToken={setToken} id={id} setId={setId} />} />
+              <Route path="/signup" element={<Signup token={token} setToken={setToken} id={id} setId={setId} />} />
               <Route path="/profile" element={<Profile removeToken={removeToken} removeId={removeId} token={token} setToken={setToken} id={id} setId={setId} />} />
             </Routes>
           )}
