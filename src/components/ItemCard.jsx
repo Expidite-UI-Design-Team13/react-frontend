@@ -12,23 +12,33 @@ import {
 } from '@mui/material';
 import { StyledMenu } from './StyledMenu';
 import { DeleteDialog } from './DeleteDialog';
+import { ItemEditModal } from './ItemEditModal';
 
 export function ItemCard(props) {
     const [deleteOpen, setDeleteOpen] = useState(false);
+    const [editOpen, setEditOpen] = useState(false);
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
+    const menuOpen = Boolean(anchorEl);
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
+    const handleMenuClose = () => {
       setAnchorEl(null);
     };
 
     const handleDelete = () => {
         setDeleteOpen(true);
-        handleClose();
+        handleMenuClose();
     }
+
+    const handleEdit = () => {
+        setEditOpen(true);
+        handleMenuClose();
+    }
+
+    const handleEditClose = () => setEditOpen(false);
+
 
     const expirationDate = new Date(props.product.expiration_date);
     const currentDate = new Date();
@@ -94,13 +104,13 @@ export function ItemCard(props) {
                         'aria-labelledby': 'demo-customized-button',
                         }}
                         anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
+                        open={menuOpen}
+                        onClose={handleMenuClose}
                     >
-                        <MenuItem onClick={handleClose} disableRipple>
+                        <MenuItem onClick={handleMenuClose} disableRipple>
                         Refill
                         </MenuItem>
-                        <MenuItem onClick={handleClose} disableRipple>
+                        <MenuItem onClick={handleEdit} disableRipple>
                         Edit
                         </MenuItem>
                         <MenuItem onClick={handleDelete} disableRipple>
@@ -109,6 +119,7 @@ export function ItemCard(props) {
                     </StyledMenu>
                 </Stack>
                 <DeleteDialog setDeleteOpen={setDeleteOpen} deleteOpen={deleteOpen} productName={props.product.name} productId={props.product.id} {...props} />
+                <ItemEditModal handleEditClose={handleEditClose} editOpen={editOpen} product={props.product} {...props} />
             </CardContent>
         </Card>
     );

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     Button,
     Dialog,
@@ -27,9 +26,8 @@ export function DeleteDialog(props) {
                 })
             })
 
-            const status = await res.status()
-            console.log(status)
-            handleClose()
+            if (res.status == 200)
+                handleClose()
         } catch (error) {
             if (error.response) {
                 console.log(error.response)
