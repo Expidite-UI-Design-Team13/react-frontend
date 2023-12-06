@@ -94,7 +94,7 @@ export function MainPage(props) {
 
     useEffect(() => {
         fetchItems();
-    }, [])
+    }, [fetchItems])
 
     return (
         <Container className="main-page" maxWidth="xs" sx={{ pb: 7 }}> {/* This maxWidth matches the device width */}
@@ -117,7 +117,7 @@ export function MainPage(props) {
                     (<Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingLeft={0}>
                         {items.map((product, index) => (
                             <Grid item xs={6} key={index}>
-                                <ItemCard product={product} />
+                                <ItemCard product={product} {...props}/>
                             </Grid>
                         ))}
                     </Grid>)

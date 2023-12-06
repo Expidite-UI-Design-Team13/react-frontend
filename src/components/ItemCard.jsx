@@ -7,24 +7,45 @@ import Stack from '@mui/material/Stack';
 import LinearProgress from '@mui/material/LinearProgress';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import '../styles/MainPage.css';
+import { 
+    MenuItem
+} from '@mui/material';
+import { StyledMenu } from './StyledMenu';
+import { DeleteDialog } from './DeleteDialog';
 
-export function ItemCard({ product }) {
-    const expirationDate = new Date(product.expiration_date);
+export function ItemCard(props) {
+    const [deleteOpen, setDeleteOpen] = useState(false);
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+
+    const handleDelete = () => {
+        setDeleteOpen(true);
+        handleClose();
+    }
+
+    const expirationDate = new Date(props.product.expiration_date);
     const currentDate = new Date();
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 
     const diffDays = Math.round((expirationDate - currentDate) / oneDay);
 
-    const productionDate = new Date(product.production_date);
+    const productionDate = new Date(props.product.production_date);
     const shelfLife = Math.round(Math.abs((expirationDate - productionDate) / oneDay));
 
     if (diffDays < 2) {
         return (
             <Card className="item-card-pink" sx={{ width: 170, height: 170, mb: 2, borderRadius: 3, backgroundColor: '#FAF9F9', boxShadow: 4 }}>
                 <Typography className="item-title" color="#555B6E" align="center" gutterBottom="true" variant="subtitle1" fontFamily={"'Lato', sans-serif"} component="div">
-                    {product.name}
+                    {props.product.name}
                 </Typography>
-                <Avatar className="item-avatar-pink" alt={product.name} src={require(`./images/${product.image}`)} sx={{ width: 62, height: 62 }} />
+                <Avatar className="item-avatar-pink" alt={props.product.name} src={require(`./images/${props.product.image}`)} sx={{ width: 62, height: 62 }} />
                 <CardContent>
                     <LinearProgress variant="determinate" value={100 * (diffDays / shelfLife)} align="center" sx={{
                         backgroundColor: '#D9D9D9',
@@ -49,9 +70,9 @@ export function ItemCard({ product }) {
     return (
         <Card className="item-card" sx={{ width: 170, height: 170, mb: 2, borderRadius: 3, backgroundColor: '#FAF9F9', boxShadow: 4 }}>
             <Typography className="item-title" color="#555B6E" align="center" gutterBottom="true" variant="subtitle1" fontFamily={"'Lato', sans-serif"} component="div">
-                {product.name}
+                {props.product.name}
             </Typography>
-            <Avatar className="item-avatar" alt={product.name} src={(product.image === null) ? require(`./images/no_image.png`) : require(`./images/${product.image}`)} sx={{ width: 62, height: 62 }} />
+            <Avatar className="item-avatar" alt={props.product.name} src={(props.product.image === null || props.product.image === '') ? require(`./images/no_image.png`) : require(`./images/${props.product.image}`)} sx={{ width: 62, height: 62 }} />
             <CardContent>
                 <LinearProgress variant="determinate" value={100 * (diffDays / shelfLife)} align="center" sx={{
                     backgroundColor: '#D9D9D9',
@@ -66,8 +87,28 @@ export function ItemCard({ product }) {
                 </Typography>
 
                 <Stack direction="row" justifyContent="end">
-                    <MoreHorizIcon justify="flex-end" sx={{ color: "#BEE3DB" }} />
+                    <MoreHorizIcon justify="flex-end" onClick={handleClick} sx={{ color: "#BEE3DB" }} />
+                    <StyledMenu
+                        id="demo-customized-menu"
+                        MenuListProps={{
+                        'aria-labelledby': 'demo-customized-button',
+                        }}
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                    >
+                        <MenuItem onClick={handleClose} disableRipple>
+                        Refill
+                        </MenuItem>
+                        <MenuItem onClick={handleClose} disableRipple>
+                        Edit
+                        </MenuItem>
+                        <MenuItem onClick={handleDelete} disableRipple>
+                        Delete
+                        </MenuItem>
+                    </StyledMenu>
                 </Stack>
+                <DeleteDialog setDeleteOpen={setDeleteOpen} deleteOpen={deleteOpen} productName={props.product.name} productId={props.product.id} {...props} />
             </CardContent>
         </Card>
     );
