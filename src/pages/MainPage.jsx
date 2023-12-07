@@ -97,10 +97,10 @@ export function MainPage(props) {
     }, [fetchItems])
 
     return (
-        <Container className="main-page" maxWidth="xs" sx={{ pb: 7 }}> {/* This maxWidth matches the device width */}
+        <div className="main-page"> {/* This maxWidth matches the device width */}
             <Header title="Track your products" />
             {/* filters */}
-            <Stack direction="row" justify="flex-end" sx={{ paddingTop: 10.5, paddingBottom: 0.7 }}>
+            <Stack direction="row" justify="flex-between" sx={{ position: 'fixed', top: 80, left: 15, right: 0 }}>
                 <LocationFilter />
                 <CategoryFilter />
                 <Sort />
@@ -114,7 +114,7 @@ export function MainPage(props) {
                 (items.length == 0 || items === null) ?
                     (<Typography sx={{ marginTop: '50%', marginLeft: '8%', display: 'flex' }}>You have no items. Please add an item by clicking the (+) button in the navigation</Typography>)
                     :
-                    (<Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingLeft={0}>
+                    (<Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingTop={18} paddingLeft={1.5}>
                         {items.map((product, index) => (
                             <Grid item xs={6} key={index}>
                                 <ItemCard product={product} {...props}/>
@@ -124,6 +124,6 @@ export function MainPage(props) {
             }
 
             <NavBar tab="home" />
-        </Container>
+        </div>
     );
 }

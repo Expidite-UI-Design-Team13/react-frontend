@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { ItemForm } from './ItemForm';
-import { Modal, Box, Typography, Stack } from '@mui/material';
-import ClearRoundedIcon from '@mui/icons-material/ClearRounded';
+import { Modal, Box } from '@mui/material';
+import { Header } from './Header';
+import { NavBar } from './NavBar';
 
 export function ItemEditModal(props) {
     const [name, setName] = useState(props.product.name);
@@ -54,35 +55,17 @@ export function ItemEditModal(props) {
         }
     }
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        bgcolor: 'white',
-        maxWidth: '120%',
-        p: 4,
-      };
-
     return (
+        <Box>
             <Modal
                 open={props.editOpen}
                 onClose={props.handleEditClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={style}>
-                    <Stack direction="row" justifyContent="space-between" sx={{marginTop: 2, marginBottom: -5}}>
-                        <Typography id="edit-modal-title" variant="h3" component="h1" 
-                            sx={{
-                                fontSize: '26px',
-                                fontFamily: 'Lato, sans-serif',
-                                color: '#555B6E'
-                            }}>
-                            Edit Item
-                        </Typography>
-                        <ClearRoundedIcon justify="flex-end" onClick={props.handleEditClose}/>
-                    </Stack>
+                <Box style={{backgroundColor: "white", height: '100%'}}>
+                <Header title="Edit Item" {...props} />
+                <NavBar tab="home" />
                     <ItemForm 
                         name={name}
                         setName={setName} 
@@ -103,5 +86,6 @@ export function ItemEditModal(props) {
                     />
                 </Box>
             </Modal>
+        </Box>
     );
 }

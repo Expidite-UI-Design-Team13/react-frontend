@@ -11,6 +11,7 @@ import { Signup } from './components/Signup';
 import { Authenticate } from './pages/Authenticate';
 import useToken from './components/useToken';
 import useId from './components/useId';
+import { ScanningPage } from './pages/ScanningPage';
 
 const themeLight = createTheme({
   palette: {
@@ -62,6 +63,7 @@ export default function App() {
             <Route path="/signup" element={<Signup token={token} setToken={setToken} id={id} setId={setId} />} />
             <Route path="/add" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />
             <Route path="/profile" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />
+            <Route path="/scan" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />
           </Routes>
           : (
             <Routes>
@@ -70,6 +72,7 @@ export default function App() {
               <Route path="/login" element={<Login token={token} setToken={setToken} id={id} setId={setId} />} />
               <Route path="/signup" element={<Signup token={token} setToken={setToken} id={id} setId={setId} />} />
               <Route path="/profile" element={<Profile removeToken={removeToken} removeId={removeId} token={token} setToken={setToken} id={id} setId={setId} />} />
+              <Route path="/scan" element={<ScanningPage removeToken={removeToken} removeId={removeId} token={token} setToken={setToken} id={id} setId={setId} />} />
             </Routes>
           )}
 

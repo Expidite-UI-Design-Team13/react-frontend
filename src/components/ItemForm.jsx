@@ -108,12 +108,16 @@ export function ItemForm(props) {
                         </IconButton>
                     ): 
                     (                                
-                        <Box sx={{backgroundColor: "#D9D9D9", display: 'flex', alignItems: "center"}}>
+                        <Box sx={{backgroundColor: "white", width: '97px', height: '125px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                             <HighlightOffRoundedIcon  
-                                sx={{ color: '#555B6E', fontSize: '16px', position: 'absolute', marginLeft: 14.5, marginBottom: 15.5}}
+                                sx={{ color: '#555B6E', fontSize: '16px', position: 'absolute', marginLeft: 12, marginBottom: 15.5}}
                                 onClick={() => props.setImage('')}
-                                />
-                            <img src={require(`../components/images/${props.image}`)} width='100%' height='125px'/>
+                            />
+                            {props.image.startsWith("http") ? (
+                                <img src={props.image} width='97px' />
+                            ): (
+                                <img src={require(`../components/images/${props.image}`)} width='97px' />
+                            )}
                         </Box>
                     )}
                     <input
