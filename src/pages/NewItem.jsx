@@ -1,10 +1,21 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavBar } from "../components/NavBar";
 import { Header } from "../components/Header";
 import { useNavigate } from 'react-router-dom';
 import { ItemForm } from '../components/ItemForm';
 
 export function NewItem(props) {
+    let scanName = '';
+    let scanExpirationFormatted = '';
+    let scanImage = ''
+
+    if (props.item) {
+        const scanExpiration = new Date(props.item.expiration_date);
+        scanName = props.item.name
+        scanExpirationFormatted = scanExpiration.getFullYear() + "-" + ("0" + (scanExpiration.getMonth() + 1)).slice(-2) + "-" + ("0" + scanExpiration.getDate()).slice(-2)
+        scanImage = props.item.image
+    }
+
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
@@ -55,6 +66,13 @@ export function NewItem(props) {
             }
         }
     }
+
+    useEffect(() => { 
+        if (props.item) 
+            setName(scanName)
+            setExpirationDate(scanExpirationFormatted)
+            setImage(scanImage)
+        }, [scanName, scanExpirationFormatted, scanImage] )
 
     return (
         <div>

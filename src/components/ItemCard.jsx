@@ -55,7 +55,7 @@ export function ItemCard(props) {
                 <Typography className="item-title" color="#555B6E" align="center" gutterBottom="true" variant="subtitle1" fontFamily={"'Lato', sans-serif"} component="div">
                     {props.product.name}
                 </Typography>
-                <Avatar className="item-avatar-pink" alt={props.product.name} src={require(`./images/${props.product.image}`)} sx={{ width: 62, height: 62 }} />
+                <Avatar className="item-avatar-pink" alt={props.product.name} src={props.product.image.startsWith("http") ? props.product.image : require(`./images/${props.product.image}`)} sx={{ width: 62, height: 62 }} />
                 <CardContent>
                     <LinearProgress variant="determinate" value={100 * (diffDays / shelfLife)} align="center" sx={{
                         backgroundColor: '#D9D9D9',
@@ -71,7 +71,28 @@ export function ItemCard(props) {
                     </Typography>
 
                     <Stack direction="row" justifyContent="end">
-                        <MoreHorizIcon justify="flex-end" sx={{ color: "#FFD6BA" }} />
+                        <MoreHorizIcon justify="flex-end" onClick={handleClick}  sx={{ color: "#FFD6BA" }} />
+                        <StyledMenu
+                        id="demo-customized-menu"
+                        MenuListProps={{
+                        'aria-labelledby': 'demo-customized-button',
+                        }}
+                        anchorEl={anchorEl}
+                        open={menuOpen}
+                        onClose={handleMenuClose}
+                        >
+                            <MenuItem onClick={handleMenuClose} disableRipple>
+                            Refill
+                            </MenuItem>
+                            <MenuItem onClick={handleEdit} disableRipple>
+                            Edit
+                            </MenuItem>
+                            <MenuItem onClick={handleDelete} disableRipple>
+                            Delete
+                            </MenuItem>
+                        </StyledMenu>
+                        <DeleteDialog setDeleteOpen={setDeleteOpen} deleteOpen={deleteOpen} productName={props.product.name} productId={props.product.id} {...props} />
+                        <ItemEditModal handleEditClose={handleEditClose} editOpen={editOpen} product={props.product} {...props} />
                     </Stack>
                 </CardContent>
             </Card>
@@ -82,7 +103,10 @@ export function ItemCard(props) {
             <Typography className="item-title" color="#555B6E" align="center" gutterBottom="true" variant="subtitle1" fontFamily={"'Lato', sans-serif"} component="div">
                 {props.product.name}
             </Typography>
-            <Avatar className="item-avatar" alt={props.product.name} src={(props.product.image === null || props.product.image === '') ? require(`./images/no_image.png`) : require(`./images/${props.product.image}`)} sx={{ width: 62, height: 62 }} />
+            <Avatar className="item-avatar" alt={props.product.name} src={
+                (props.product.image === null || props.product.image === '') ? 
+                    require(`./images/no_image.png`) : (props.product.image.startsWith("http") ? (props.product.image) : (require(`./images/${props.product.image}`)))
+                    } sx={{ width: 62, height: 62 }} />
             <CardContent>
                 <LinearProgress variant="determinate" value={100 * (diffDays / shelfLife)} align="center" sx={{
                     backgroundColor: '#D9D9D9',
