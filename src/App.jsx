@@ -24,7 +24,7 @@ const themeLight = createTheme({
       light: "#FAF9F9", //overides light blue
       dark: "#89B0AE", //overides dark blue color
     },
-  }
+  },
 });
 
 const themeDark = createTheme({
@@ -41,7 +41,7 @@ const themeDark = createTheme({
   },
   menuPaper: {
     maxHeight: 100
-  }
+  },
 });
 
 export default function App() {
@@ -58,7 +58,7 @@ export default function App() {
       <BrowserRouter>
         {!token && token !== "" && token == undefined ?
           <Routes>
-            <Route path="/" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />
+            <Route path="/" element={<Signup token={token} setToken={setToken} id={id} setId={setId} />} />
             <Route path="/login" element={<Login token={token} setToken={setToken} id={id} setId={setId} />} />
             <Route path="/signup" element={<Signup token={token} setToken={setToken} id={id} setId={setId} />} />
             <Route path="/add" element={<Authenticate token={token} setToken={setToken} id={id} setId={setId} />} />
