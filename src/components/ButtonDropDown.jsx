@@ -64,17 +64,6 @@ export const ButtonDropDown = (props) => {
             open={Boolean(anchorEl)}
             onClose={(e) => setAnchorEl(null)}
         >
-        <MenuItem>
-            <div onClick={props.handleAdd}>
-              {props.type=="category" && (
-                "New Category"
-              )}
-              {props.type=="location" && (
-                "New Location"
-              )}
-              <Divider sx={{mt: 1, width: 140}}/>
-            </div>
-        </MenuItem>
         {props.items.map((item) => (
           <div>
             <MenuItem key={item}>
@@ -93,6 +82,20 @@ export const ButtonDropDown = (props) => {
             )}
           </div>
         ))}
+        <MenuItem>
+            <div onClick={props.handleAdd}>
+              <Divider sx={{mb: 1, width: 140}}/>
+              <Stack direction="row">
+                <AddIcon sx={{mr: 0.5}}/>
+                {props.type=="category" && (
+                  "New Category"
+                )}
+                {props.type=="location" && (
+                  "New Location"
+                )}
+              </Stack>
+            </div>
+        </MenuItem>
       </Menu>
     </div>
   );
