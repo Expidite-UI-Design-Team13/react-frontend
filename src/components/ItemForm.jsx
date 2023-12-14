@@ -12,10 +12,14 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import { ButtonDropDown } from './ButtonDropDown';
 import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
+import { NewCategoryModal } from "./NewCategoryModal";
+import { NewLocationModal } from "./NewLocationModal";
 
 export function ItemForm(props) {
     const [categories, setCategories] = useState([]);
     const [locations, setLocations] = useState([]);
+    const [categoryModalOpen, setCategoryModalOpen] = useState(false)
+    const [locationModalOpen, setLocationModalOpen] = useState(false)
 
     const fileInput = useRef();
 
@@ -37,7 +41,7 @@ export function ItemForm(props) {
             })
             const categoriesData = await categoriesRes.json()
             const categoriesArray = []
-            
+
             for (let i = 0; i < categoriesData.length; i++)
                 categoriesArray.push(categoriesData[i]["category"])
 
@@ -78,9 +82,25 @@ export function ItemForm(props) {
         } 
     }
 
+    const handleAddCategory = () => {
+        setCategoryModalOpen(true)
+    }
+
+    const onCategoryClose = () => {
+        setCategoryModalOpen(false)
+    }
+
+    const handleAddLocation = () => {
+        setLocationModalOpen(true)
+    }
+
+    const onLocationClose = () => {
+        setLocationModalOpen(false)
+    }
+
     useEffect(() => {
         fetchOptions();
-    }, [])
+    }, [fetchOptions])
 
     return (
         <div>
@@ -136,6 +156,10 @@ export function ItemForm(props) {
                                 items={categories}
                                 selectedItems={props.selectedCategories}
                                 setSelectedItems={props.setSelectedCategories}
+                                type="category" 
+                                handleAdd={handleAddCategory}
+                                id={props.id}
+                                token={props.token}
                             />
                         </Box>
                     </Stack>
@@ -149,6 +173,10 @@ export function ItemForm(props) {
                                 items={locations}
                                 selectedItems={props.selectedLocations}
                                 setSelectedItems={props.setSelectedLocations}
+                                type="location" 
+                                handleAdd={handleAddLocation}
+                                id={props.id}
+                                token={props.token}
                             />
                         </Box>
                     </Stack>
@@ -205,6 +233,8 @@ export function ItemForm(props) {
                 </Button>
             </Box>
         </Box>
+        <NewCategoryModal categoryModalOpen={categoryModalOpen} onCategoryClose={onCategoryClose} {...props} />
+        <NewLocationModal locationModalOpen={locationModalOpen} onLocationClose={onLocationClose} {...props} />
     </div>
     )
 }

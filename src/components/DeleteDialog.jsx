@@ -13,27 +13,75 @@ export function DeleteDialog(props) {
     };
 
     const deleteItem = async () => {
-        try {
-            const res = await fetch('http://127.0.0.1:5000/api/items/delete', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + props.token
-                },
-                body: JSON.stringify({
-                    item_id: props.productId,
+        if (props.type=="item") {
+            try {
+                const res = await fetch('http://127.0.0.1:5000/api/items/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + props.token
+                    },
+                    body: JSON.stringify({
+                        item_id: props.productId,
+                    })
                 })
-            })
 
-            if (res.status == 200)
-                handleClose()
-        } catch (error) {
-            if (error.response) {
-                console.log(error.response)
-                console.log(error.response.status)
-                console.log(error.response.headers)
+                if (res.status == 200)
+                    handleClose()
+            } catch (error) {
+                if (error.response) {
+                    console.log(error.response)
+                    console.log(error.response.status)
+                    console.log(error.response.headers)
+                }
             }
+        } else if (props.type=="category") {
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/categories/delete`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + props.token
+                    },
+                    body: JSON.stringify({
+                        user_id: props.id,
+                        category: props.name
+                    })
+                })
+                if (res.status == 200)
+                    handleClose()
+            } catch (error) {
+                if (error.response) {
+                    console.log(error.response)
+                    console.log(error.response.status)
+                    console.log(error.response.headers)
+                }
+            } 
+        } else if (props.type=="location") {
+            try {
+                const res = await fetch(`http://127.0.0.1:5000/api/locations/delete`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + props.token
+                    },
+                    body: JSON.stringify({
+                        user_id: props.id,
+                        location: props.name
+                    })
+                })
+                if (res.status == 200)
+                    handleClose()
+            } catch (error) {
+                if (error.response) {
+                    console.log(error.response)
+                    console.log(error.response.status)
+                    console.log(error.response.headers)
+                }
+            } 
         }
     }
 
@@ -46,7 +94,7 @@ export function DeleteDialog(props) {
             aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    Are you sure you want to delete {props.productName}?
+                    Are you sure you want to delete {props.name}?
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">

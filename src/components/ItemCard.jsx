@@ -67,9 +67,7 @@ export function ItemCard(props) {
                     }} />
                     <Typography color="#555B6E" align="center" fontFamily={"'Lato', sans-serif"} sx={{ fontSize: 10 }}>
                         {diffDays < 0 ? (`Expired ${Math.abs(diffDays)} days ago`) : (`Expires in ${diffDays} day`)}
-
                     </Typography>
-
                     <Stack direction="row" justifyContent="end">
                         <MoreHorizIcon justify="flex-end" onClick={handleClick}  sx={{ color: "#FFD6BA" }} />
                         <StyledMenu
@@ -91,7 +89,7 @@ export function ItemCard(props) {
                             Delete
                             </MenuItem>
                         </StyledMenu>
-                        <DeleteDialog setDeleteOpen={setDeleteOpen} deleteOpen={deleteOpen} productName={props.product.name} productId={props.product.id} {...props} />
+                        <DeleteDialog setDeleteOpen={setDeleteOpen} deleteOpen={deleteOpen} name={props.product.name} productId={props.product.id} type="item" {...props} />
                         <ItemEditModal handleEditClose={handleEditClose} editOpen={editOpen} product={props.product} {...props} />
                     </Stack>
                 </CardContent>
@@ -142,7 +140,7 @@ export function ItemCard(props) {
                         </MenuItem>
                     </StyledMenu>
                 </Stack>
-                <DeleteDialog setDeleteOpen={setDeleteOpen} deleteOpen={deleteOpen} productName={props.product.name} productId={props.product.id} {...props} />
+                <DeleteDialog setDeleteOpen={setDeleteOpen} deleteOpen={deleteOpen} name={props.product.name} productId={props.product.id} type="item" {...props} />
                 <ItemEditModal handleEditClose={handleEditClose} editOpen={editOpen} product={props.product} {...props} />
             </CardContent>
         </Card>
