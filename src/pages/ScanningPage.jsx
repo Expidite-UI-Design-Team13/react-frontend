@@ -14,7 +14,9 @@ export function ScanningPage (props) {
     const [results, setResults] = useState([]);
     const scannerRef = useRef(null);
 
-    console.log(barcode)
+    const openScanner = true
+
+    //console.log(barcode)
 
     const fetchProductInfo = async() => {
         axios
@@ -50,7 +52,7 @@ export function ScanningPage (props) {
 
     return (
         <div>
-            <Header title="Scanning" />
+            <Header title="Scanning" openScanner={openScanner}/>
             <NavBar tab="add" />
             <Box sx={{        
                 position: 'absolute',
@@ -58,26 +60,19 @@ export function ScanningPage (props) {
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
             }}>
-
-
-<div>
-      <ul className="results">
-        {results.map((result) => (result.codeResult && <Result key={result.codeResult.code} result={result} />))}
-      </ul>
-      <div ref={scannerRef} style={{ position: 'relative', border: '3px solid #FFAF78' }}>
-        {/* <video style={{ width: window.innerWidth, height: 480, border: '3px solid orange' }}/> */}
-        <canvas className="drawingBuffer" style={{
-          position: 'absolute',
-          top: '0px',
-          // left: '0px',
-          // height: '100%',
-          // width: '100%',
-          border: '3px solid #BEE3DB',
-        }} width="640" height="480" />
-        <Scanner setBarcode={setBarcode} scannerRef={scannerRef} onDetected={(result) => setResults([...results, result])} />
-      </div>
-    </div>
-
+                <div>
+                    <ul className="results">
+                        {results.map((result) => (result.codeResult && <Result key={result.codeResult.code} result={result} />))}
+                    </ul>
+                    <div ref={scannerRef} style={{ position: 'relative', border: '3px solid #FFAF78' }}>
+                        <canvas className="drawingBuffer" style={{
+                        position: 'absolute',
+                        top: '0px',
+                        border: '3px solid #BEE3DB',
+                        }} width="640" height="480" />
+                        <Scanner setBarcode={setBarcode} scannerRef={scannerRef} onDetected={(result) => setResults([...results, result])} />
+                    </div>
+                </div>
             </Box>
         </div>
     )

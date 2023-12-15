@@ -7,9 +7,7 @@ import Stack from '@mui/material/Stack';
 import LinearProgress from '@mui/material/LinearProgress';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import '../styles/MainPage.css';
-import { 
-    MenuItem
-} from '@mui/material';
+import { MenuItem } from '@mui/material';
 import { StyledMenu } from './StyledMenu';
 import { DeleteDialog } from './DeleteDialog';
 import { ItemEditModal } from './ItemEditModal';
@@ -44,20 +42,20 @@ export function ItemCard(props) {
     const currentDate = new Date();
     const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
 
-    const diffDays = Math.round((expirationDate - currentDate) / oneDay);
+    const daysUntilExpiration = Math.round((expirationDate - currentDate) / oneDay);
 
     const productionDate = new Date(props.product.production_date);
     const shelfLife = Math.round(Math.abs((expirationDate - productionDate) / oneDay));
 
-    if (diffDays < 2) {
+    if (daysUntilExpiration < 2) {
         return (
             <Card className="item-card-pink" sx={{ width: 170, height: 170, mb: 2, borderRadius: 3, backgroundColor: '#FAF9F9', boxShadow: 4 }}>
                 <Typography className="item-title" color="#555B6E" align="center" gutterBottom="true" variant="subtitle1" fontFamily={"'Lato', sans-serif"} component="div">
-                    {props.product.name}
+                    {props.product.name.length > 18 ? props.product.name.substring(0, 18) + '...' : props.product.name}
                 </Typography>
                 <Avatar className="item-avatar-pink" alt={props.product.name} src={props.product.image.startsWith("http") ? props.product.image : require(`./images/${props.product.image}`)} sx={{ width: 62, height: 62 }} />
                 <CardContent>
-                    <LinearProgress variant="determinate" value={100 * (diffDays / shelfLife)} align="center" sx={{
+                    <LinearProgress variant="determinate" value={100 * (daysUntilExpiration / shelfLife)} align="center" sx={{
                         backgroundColor: '#D9D9D9',
                         '& .MuiLinearProgress-bar': {
                             backgroundColor: '#FFD6BA'
@@ -66,7 +64,7 @@ export function ItemCard(props) {
                         borderRadius: 2,
                     }} />
                     <Typography color="#555B6E" align="center" fontFamily={"'Lato', sans-serif"} sx={{ fontSize: 10 }}>
-                        {diffDays < 0 ? (`Expired ${Math.abs(diffDays)} days ago`) : (`Expires in ${diffDays} day`)}
+                        {daysUntilExpiration < 0 ? (`Expired ${Math.abs(daysUntilExpiration)} days ago`) : (`Expires in ${daysUntilExpiration} day`)}
                     </Typography>
                     <Stack direction="row" justifyContent="end">
                         <MoreHorizIcon justify="flex-end" onClick={handleClick}  sx={{ color: "#FFD6BA" }} />
@@ -106,7 +104,7 @@ export function ItemCard(props) {
                     require(`./images/no_image.png`) : (props.product.image.startsWith("http") ? (props.product.image) : (require(`./images/${props.product.image}`)))
                     } sx={{ width: 62, height: 62 }} />
             <CardContent>
-                <LinearProgress variant="determinate" value={100 * (diffDays / shelfLife)} align="center" sx={{
+                <LinearProgress variant="determinate" value={100 * (daysUntilExpiration / shelfLife)} align="center" sx={{
                     backgroundColor: '#D9D9D9',
                     '& .MuiLinearProgress-bar': {
                         backgroundColor: '#89B0AE'
@@ -115,7 +113,7 @@ export function ItemCard(props) {
                     borderRadius: 2,
                 }} />
                 <Typography color="#555B6E" align="center" fontFamily={"'Lato', sans-serif"} sx={{ fontSize: 10 }}>
-                    Expires in {diffDays} days
+                    Expires in {daysUntilExpiration} days
                 </Typography>
 
                 <Stack direction="row" justifyContent="end">

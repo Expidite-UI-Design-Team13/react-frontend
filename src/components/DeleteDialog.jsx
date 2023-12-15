@@ -27,8 +27,9 @@ export function DeleteDialog(props) {
                     })
                 })
 
-                if (res.status == 200)
+                if (res.status == 200){
                     handleClose()
+                }
             } catch (error) {
                 if (error.response) {
                     console.log(error.response)

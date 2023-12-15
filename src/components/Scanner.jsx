@@ -61,7 +61,7 @@ setBarcode,
     const err = getMedianOfCodeErrors(result.codeResult.decodedCodes);
     // if Quagga is at least 75% certain that it read correctly, then accept the code.
     if (err < 0.25) {
-      console.log('>>', result.codeResult.code);
+      //console.log('>>', result.codeResult.code);
       setBarcode(result.codeResult.code)
       onDetected(result.codeResult.code);
     }

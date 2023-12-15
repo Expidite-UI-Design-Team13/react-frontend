@@ -6,12 +6,22 @@ import { LocationFilter } from '../components/LocationFilter';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { Sort } from '../components/Sort';
 import Stack from '@mui/material/Stack';
-import { Grid, Container, Typography } from '@mui/material';
+import { Grid, Typography, Alert, AlertTitle, Menu, MenuItem } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import '../styles/MainPage.css';
 
 export function MainPage(props) {
     const [items, setItems] = useState([]);
+    const [alertItems, setAlertItems] = useState([])
+    const [anchorEl, setAnchorEl] = useState(null);
+    const notifOpen = Boolean(anchorEl);
+    const handleNotifClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleNotifClose = () => {
+        setAnchorEl(null);
+    };
+
 
     // To be replaced with data from database.items
     const testItems = [
@@ -92,21 +102,54 @@ export function MainPage(props) {
         }
     }
 
+    const isAlertItem = (product) => {
+        const expirationDate = new Date(product.expiration_date);
+        const currentDate = new Date();
+        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    
+        const daysUntilExpiration = Math.round((expirationDate - currentDate) / oneDay);
+
+        if (product.alert_days == daysUntilExpiration) {
+            return true
+        }
+        return false
+    }
+
+    const getDaysUntilExpiration = (product) => {
+        const expirationDate = new Date(product.expiration_date);
+        const currentDate = new Date();
+        const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+    
+        const daysUntilExpiration = Math.round((expirationDate - currentDate) / oneDay);
+        return daysUntilExpiration   
+    }
+
     useEffect(() => {
         fetchItems();
-    }, [fetchItems])
+
+        let alert = []
+
+        for (let i = 0; i < items.length; i++) {
+            if (isAlertItem(items[i])){
+                alert.push(items[i])}
+        }
+        setAlertItems(alert)
+        //console.log(alertItems)
+    }, [fetchItems, alertItems, setAlertItems])
 
     return (
         <div className="main-page"> {/* This maxWidth matches the device width */}
-            <Header title="Track your products" />
+            <Header title="Track your products" alertItems={alertItems} handleNotifClick={handleNotifClick}/>
             {/* filters */}
-            <Stack direction="row" justify="flex-between" sx={{ position: 'fixed', top: 80, left: 15, right: 0 }}>
-                <LocationFilter />
-                <CategoryFilter />
-                <Sort />
-                <div>
-                    <SearchIcon className="search-icon" sx={{ paddingLeft: 0.1, paddingTop: 1.5, color: "#555B6E" }} />
-                </div>
+            <Stack direction="column">
+                <Stack direction="row" justify="flex-between" sx={{ position: 'fixed', top: 80, left: 15, right: 0 }}>
+                    <LocationFilter />
+                    <CategoryFilter />
+                    <Sort />
+                    <div>
+                        <SearchIcon className="search-icon" sx={{ paddingLeft: 0.1, paddingTop: 1.5, color: "#555B6E" }} />
+                    </div>
+                </Stack>
             </Stack>
 
             {/* Display items */}
@@ -117,13 +160,40 @@ export function MainPage(props) {
                     (<Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingTop={18} paddingLeft={1.5}>
                         {items.map((product, index) => (
                             <Grid item xs={6} key={index}>
-                                <ItemCard product={product} {...props}/>
+                                <ItemCard product={product} {...props} alertItems={alertItems}/>
                             </Grid>
                         ))}
+                        
                     </Grid>)
             }
 
             <NavBar tab="home" />
+
+            <Menu
+                                id="basic-menu"
+                                anchorEl={anchorEl}
+                                open={notifOpen}
+                                onClose={handleNotifClose}
+                                MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                                }}
+                                sx={{position: "fixed", top: 0, left: 0, right: 0}}
+                            >
+                                
+                        {alertItems.map((product) => (
+                                    <MenuItem>
+                                        <Alert variant="filled" severity="info" sx={{backgroundColor: '#FFD6BA', color: '#2A2E38'}}>
+                                            <AlertTitle sx={{fontSize: "16px"}}>
+                                                {product.name.length > 14 ? product.name.substring(0, 14) + '...' : product.name} expires in {getDaysUntilExpiration(product)} 
+                                                {getDaysUntilExpiration(product) === 1 ? " day":" days"}
+                                            </AlertTitle>
+                                                Remember to add it to your shopping list.
+                                        </Alert>
+                                    </MenuItem>
+                            
+                                ))}
+                        </Menu>
+            
         </div>
     );
 }

@@ -3,8 +3,11 @@ import { NavBar } from "../components/NavBar";
 import { Header } from "../components/Header";
 import { useNavigate } from 'react-router-dom';
 import { ItemForm } from '../components/ItemForm';
+import { ScanningPage } from './ScanningPage'
 
-export function NewItem(props) {
+export function NewItem(props) {    
+    const [openScanner, setOpenScanner] = useState(false)
+
     let scanName = '';
     let scanExpirationFormatted = '';
     let scanImage = ''
@@ -74,28 +77,34 @@ export function NewItem(props) {
             setImage(scanImage)
         }, [scanName, scanExpirationFormatted, scanImage] )
 
-    return (
-        <div>
-            <Header title="New Item" />
-            <NavBar tab="add" />
-            <ItemForm 
-                name={name}
-                setName={setName} 
-                image={image}
-                setImage={setImage} 
-                expirationDate={expirationDate}
-                setExpirationDate={setExpirationDate} 
-                productionDate={productionDate}
-                setProductionDate={setProductionDate} 
-                alertDays={alertDays}
-                setAlertDays={setAlertDays} 
-                selectedCategories={selectedCategories}
-                setSelectedCategories={setSelectedCategories} 
-                selectedLocations={selectedLocations}
-                setSelectedLocations={setSelectedLocations} 
-                handleSubmit={handleSubmit}
-                {...props}
-            />
-        </div>
-    );
+    if (!openScanner) {
+        return (
+            <div>
+                <Header title="New Item" openScanner={openScanner} setOpenScanner={setOpenScanner}/>
+                <NavBar tab="add" />
+                <ItemForm 
+                    name={name}
+                    setName={setName} 
+                    image={image}
+                    setImage={setImage} 
+                    expirationDate={expirationDate}
+                    setExpirationDate={setExpirationDate} 
+                    productionDate={productionDate}
+                    setProductionDate={setProductionDate} 
+                    alertDays={alertDays}
+                    setAlertDays={setAlertDays} 
+                    selectedCategories={selectedCategories}
+                    setSelectedCategories={setSelectedCategories} 
+                    selectedLocations={selectedLocations}
+                    setSelectedLocations={setSelectedLocations} 
+                    handleSubmit={handleSubmit}
+                    {...props}
+                />
+            </div>
+        );
+    } else {
+        return (
+            <ScanningPage {...props}/>
+        )
+    }
 }
