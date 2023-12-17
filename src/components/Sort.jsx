@@ -22,19 +22,15 @@ const MenuProps = {
 };
 
 const sortBy = [
-    'Date added',
-    'Date modified',
     'Expiration date',
 ];
 
-export function Sort() {
-    const [currentSort, setCurrentSort] = React.useState([]);
-
+export function Sort(props) {
     const handleChange = (event) => {
         const {
             target: { value },
         } = event;
-        setCurrentSort(
+        props.setCurrentSort(
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
@@ -47,9 +43,9 @@ export function Sort() {
                 id="demo-multiple-checkbox"
                 multiple
                 displayEmpty
-                value={currentSort}
+                value={props.currentSort}
                 sx={{
-                    m: 0.8, width: 77, height: 42, borderRadius: 5, backgroundColor: "#BEE3DB",
+                    m: 0.8, width: 82, height: 42, borderRadius: 5, backgroundColor: "#BEE3DB",
                     '& .MuiOutlinedInput-notchedOutline': {
                         borderColor: '#BEE3DB'
                     },
@@ -72,7 +68,7 @@ export function Sort() {
                 </MenuItem>
                 {sortBy.map((name) => (
                     <MenuItem key={name} value={name}>
-                        <Checkbox checked={currentSort.indexOf(name) > -1} />
+                        <Checkbox checked={props.currentSort.indexOf(name) > -1} />
                         <ListItemText className='select-filter-text' primary={name} />
                     </MenuItem>
                 ))}

@@ -21,21 +21,12 @@ const MenuProps = {
     },
 };
 
-const categories = [
-    'skin care',
-    'fruit',
-    'veggie',
-    'dairy',
-];
-
-export function CategoryFilter() {
-    const [category, setCategory] = React.useState([]);
-
+export function CategoryFilter(props) {
     const handleChange = (event) => {
         const {
             target: { value },
         } = event;
-        setCategory(
+        props.setCategory(
             // On autofill we get a stringified value.
             typeof value === 'string' ? value.split(',') : value,
         );
@@ -48,9 +39,9 @@ export function CategoryFilter() {
                 id="demo-multiple-checkbox"
                 multiple
                 displayEmpty
-                value={category}
+                value={props.category}
                 sx={{
-                    m: 0.8, width: 111, height: 42, borderRadius: 5, backgroundColor: "#BEE3DB",
+                    m: 0.8, width: 116, height: 42, borderRadius: 5, backgroundColor: "#BEE3DB",
                     '& .MuiOutlinedInput-notchedOutline': {
                         borderColor: '#BEE3DB'
                     },
@@ -71,9 +62,9 @@ export function CategoryFilter() {
                 <MenuItem className='select-filter-text' disabled value="">
                     <em className='select-filter-text'>Category</em>
                 </MenuItem>
-                {categories.map((name) => (
+                {props.availableCategories.map((name) => (
                     <MenuItem key={name} value={name}>
-                        <Checkbox checked={category.indexOf(name) > -1} />
+                        <Checkbox checked={props.category.indexOf(name) > -1} />
                         <ListItemText className='select-filter-text' primary={name} />
                     </MenuItem>
                 ))}

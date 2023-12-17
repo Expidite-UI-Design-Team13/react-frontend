@@ -19,10 +19,10 @@ export function ItemCard(props) {
     const [anchorEl, setAnchorEl] = useState(null);
     const menuOpen = Boolean(anchorEl);
     const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
     const handleMenuClose = () => {
-      setAnchorEl(null);
+        setAnchorEl(null);
     };
 
     const handleDelete = () => {
@@ -53,7 +53,10 @@ export function ItemCard(props) {
                 <Typography className="item-title" color="#555B6E" align="center" gutterBottom="true" variant="subtitle1" fontFamily={"'Lato', sans-serif"} component="div">
                     {props.product.name.length > 18 ? props.product.name.substring(0, 18) + '...' : props.product.name}
                 </Typography>
-                <Avatar className="item-avatar-pink" alt={props.product.name} src={props.product.image.startsWith("http") ? props.product.image : require(`./images/${props.product.image}`)} sx={{ width: 62, height: 62 }} />
+                <Avatar className="item-avatar-pink" alt={props.product.name} src={props.product.image === null ?
+                    require(`./images/no_image.png`) :
+                    (props.product.image.startsWith("http") ?
+                        props.product.image : require(`./images/${props.product.image}`))} sx={{ width: 62, height: 62 }} />
                 <CardContent>
                     <LinearProgress variant="determinate" value={100 * (daysUntilExpiration / shelfLife)} align="center" sx={{
                         backgroundColor: '#D9D9D9',
@@ -67,24 +70,24 @@ export function ItemCard(props) {
                         {daysUntilExpiration < 0 ? (`Expired ${Math.abs(daysUntilExpiration)} days ago`) : (`Expires in ${daysUntilExpiration} day`)}
                     </Typography>
                     <Stack direction="row" justifyContent="end">
-                        <MoreHorizIcon justify="flex-end" onClick={handleClick}  sx={{ color: "#FFD6BA" }} />
+                        <MoreHorizIcon justify="flex-end" onClick={handleClick} sx={{ color: "#FFD6BA" }} />
                         <StyledMenu
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                        'aria-labelledby': 'demo-customized-button',
-                        }}
-                        anchorEl={anchorEl}
-                        open={menuOpen}
-                        onClose={handleMenuClose}
+                            id="demo-customized-menu"
+                            MenuListProps={{
+                                'aria-labelledby': 'demo-customized-button',
+                            }}
+                            anchorEl={anchorEl}
+                            open={menuOpen}
+                            onClose={handleMenuClose}
                         >
                             <MenuItem onClick={handleMenuClose} disableRipple>
-                            Refill
+                                Refill
                             </MenuItem>
                             <MenuItem onClick={handleEdit} disableRipple>
-                            Edit
+                                Edit
                             </MenuItem>
                             <MenuItem onClick={handleDelete} disableRipple>
-                            Delete
+                                Delete
                             </MenuItem>
                         </StyledMenu>
                         <DeleteDialog setDeleteOpen={setDeleteOpen} deleteOpen={deleteOpen} name={props.product.name} productId={props.product.id} type="item" {...props} />
@@ -100,9 +103,9 @@ export function ItemCard(props) {
                 {props.product.name}
             </Typography>
             <Avatar className="item-avatar" alt={props.product.name} src={
-                (props.product.image === null || props.product.image === '') ? 
+                (props.product.image === null || props.product.image === '') ?
                     require(`./images/no_image.png`) : (props.product.image.startsWith("http") ? (props.product.image) : (require(`./images/${props.product.image}`)))
-                    } sx={{ width: 62, height: 62 }} />
+            } sx={{ width: 62, height: 62 }} />
             <CardContent>
                 <LinearProgress variant="determinate" value={100 * (daysUntilExpiration / shelfLife)} align="center" sx={{
                     backgroundColor: '#D9D9D9',
@@ -121,20 +124,20 @@ export function ItemCard(props) {
                     <StyledMenu
                         id="demo-customized-menu"
                         MenuListProps={{
-                        'aria-labelledby': 'demo-customized-button',
+                            'aria-labelledby': 'demo-customized-button',
                         }}
                         anchorEl={anchorEl}
                         open={menuOpen}
                         onClose={handleMenuClose}
                     >
                         <MenuItem onClick={handleMenuClose} disableRipple>
-                        Refill
+                            Refill
                         </MenuItem>
                         <MenuItem onClick={handleEdit} disableRipple>
-                        Edit
+                            Edit
                         </MenuItem>
                         <MenuItem onClick={handleDelete} disableRipple>
-                        Delete
+                            Delete
                         </MenuItem>
                     </StyledMenu>
                 </Stack>

@@ -20,22 +20,21 @@ const MenuProps = {
     },
 };
 
-const locations = [
-    'kitchen',
-    'bathroom',
-    'living room',
-    'storage room',
-];
+// const locations = [
+//     'kitchen',
+//     'bathroom',
+//     'living room',
+//     'storage room',
+// ];
 
-export function LocationFilter() {
-    const [location, setLocation] = React.useState([]);
+export function LocationFilter(props) {
+    // const [location, setLocation] = React.useState([]);
 
     const handleChange = (event) => {
         const {
             target: { value },
         } = event;
-        setLocation(
-            // On autofill we get a stringified value.
+        props.setLocation(
             typeof value === 'string' ? value.split(',') : value,
         );
     };
@@ -47,9 +46,9 @@ export function LocationFilter() {
                 id="demo-multiple-checkbox"
                 multiple
                 displayEmpty
-                value={location}
+                value={props.location}
                 sx={{
-                    m: 0.8, width: 107, height: 42, borderRadius: 5, backgroundColor: "#BEE3DB",
+                    m: 0.8, width: 112, height: 42, borderRadius: 5, backgroundColor: "#BEE3DB",
                     '& .MuiOutlinedInput-notchedOutline': {
                         borderColor: '#BEE3DB'
                     },
@@ -70,9 +69,9 @@ export function LocationFilter() {
                 <MenuItem className='select-filter-text' disabled value="">
                     <em className='select-filter-text'>Location</em>
                 </MenuItem>
-                {locations.map((name) => (
+                {props.availableLocations.map((name) => (
                     <MenuItem key={name} value={name}>
-                        <Checkbox checked={location.indexOf(name) > -1} />
+                        <Checkbox checked={props.location.indexOf(name) > -1} />
                         <ListItemText className='select-filter-text' primary={name} />
                     </MenuItem>
                 ))}
