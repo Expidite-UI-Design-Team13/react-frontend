@@ -249,7 +249,7 @@ export function MainPage(props) {
                 sx={{ position: "fixed", top: 0, left: 0, right: 0 }}
             >
 
-                {alertItems.map((product) => (
+                {alertItems !== null && alertItems.map((product) => (
                     <MenuItem>
                         <Alert variant="filled" severity="info" sx={{ backgroundColor: '#FFD6BA', color: '#2A2E38' }}>
                             <AlertTitle sx={{ fontSize: "16px" }}>
@@ -261,6 +261,11 @@ export function MainPage(props) {
                     </MenuItem>
 
                 ))}
+                {alertItems && (
+                    <MenuItem sx={{color: "#555B6E"}}>
+                        No notifications today.
+                    </MenuItem>
+                )}
             </Menu>
 
         </div>
