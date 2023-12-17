@@ -175,10 +175,7 @@ export function MainPage(props) {
 
     useEffect(() => {
         fetchItems();
-        fetchOptions();
-        handleFilter();
         let alert = []
-
         for (let i = 0; i < items.length; i++) {
             if (isAlertItem(items[i])) {
                 alert.push(items[i])
@@ -186,12 +183,15 @@ export function MainPage(props) {
         }
         setAlertItems(alert)
         //console.log(alertItems)
-    }, [fetchItems, fetchOptions, handleFilter, alertItems, setAlertItems])
+    }, [fetchItems, fetchOptions, alertItems, setAlertItems])
 
     useEffect(() => {
         handleFilter();
-    }, [selectedLocation]);
+    }, [selectedLocation, selectedCategory, selectedSort]);
 
+    useEffect(() => {
+        fetchOptions();
+    }, []);
 
     return (
         <div className="main-page">
@@ -221,11 +221,17 @@ export function MainPage(props) {
                     (<Typography sx={{ marginTop: '50%', marginLeft: '8%', display: 'flex' }}>You have no items. Please add an item by clicking the (+) button in the navigation</Typography>)
                     :
                     (<Grid container direction={'row'} rowSpacing={0.3} columnSpacing={2} paddingTop={18} paddingLeft={1.5}>
-                        {filteredItems.map((product, index) => (
-                            <Grid item xs={6} key={index}>
-                                <ItemCard product={product} {...props} alertItems={alertItems} />
-                            </Grid>
-                        ))}
+                        {(selectedLocation.length === 0 && selectedCategory.length === 0 && selectedSort.length === 0) ?
+                            items.map((product, index) => (
+                                <Grid item xs={6} key={index}>
+                                    <ItemCard product={product} {...props} alertItems={alertItems} />
+                                </Grid>
+                            )) :
+                            filteredItems.map((product, index) => (
+                                <Grid item xs={6} key={index}>
+                                    <ItemCard product={product} {...props} alertItems={alertItems} />
+                                </Grid>
+                            ))}
 
                     </Grid>)
             }
