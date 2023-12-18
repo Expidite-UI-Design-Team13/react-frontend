@@ -61,6 +61,10 @@ export function Profile(props) {
     }
 
     useEffect(() => {
+        localStorage.removeItem('itemName')
+        localStorage.removeItem('itemExpirationDate')
+        localStorage.removeItem('itemImage')
+
         getUser()
     }, [getUser])
 

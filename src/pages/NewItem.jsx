@@ -4,19 +4,20 @@ import { Header } from "../components/Header";
 import { useNavigate } from 'react-router-dom';
 import { ItemForm } from '../components/ItemForm';
 import { ScanningPage } from './ScanningPage'
+import { NewCategoryModal } from "../components/NewCategoryModal";
+import { NewLocationModal } from "../components//NewLocationModal";
 
 export function NewItem(props) {    
     const [openScanner, setOpenScanner] = useState(false)
+    const [categoryModalOpen, setCategoryModalOpen] = useState(false)
+    const [locationModalOpen, setLocationModalOpen] = useState(false)
 
-    let scanName = '';
-    let scanExpirationFormatted = '';
-    let scanImage = ''
+    const onCategoryClose = () => {
+        setCategoryModalOpen(false)
+    }
 
-    if (props.item) {
-        const scanExpiration = new Date(props.item.expiration_date);
-        scanName = props.item.name
-        scanExpirationFormatted = scanExpiration.getFullYear() + "-" + ("0" + (scanExpiration.getMonth() + 1)).slice(-2) + "-" + ("0" + scanExpiration.getDate()).slice(-2)
-        scanImage = props.item.image
+    const onLocationClose = () => {
+        setLocationModalOpen(false)
     }
 
     const [name, setName] = useState('');
@@ -24,6 +25,8 @@ export function NewItem(props) {
     const [expirationDate, setExpirationDate] = useState('');
     const [productionDate, setProductionDate] = useState('');
     const [alertDays, setAlertDays] = useState('');
+
+    console.log(name, image, expirationDate)
 
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedLocations, setSelectedLocations] = useState([]);
@@ -71,11 +74,19 @@ export function NewItem(props) {
     }
 
     useEffect(() => { 
-        if (props.item) 
-            setName(scanName)
-            setExpirationDate(scanExpirationFormatted)
-            setImage(scanImage)
-        }, [scanName, scanExpirationFormatted, scanImage] )
+        if (localStorage.getItem('itemName')) {       
+            setName(localStorage.getItem('itemName'))            
+        }
+
+        if (localStorage.getItem('itemExpirationDate')) {
+            const scanExpiration = new Date(localStorage.getItem('itemExpirationDate'));
+            setExpirationDate(scanExpiration.getFullYear() + "-" + ("0" + (scanExpiration.getMonth() + 1)).slice(-2) + "-" + ("0" + scanExpiration.getDate()).slice(-2))
+        }
+
+        if (localStorage.getItem('itemImage')) {
+            setImage(localStorage.getItem('itemImage'))
+        }
+    }, [props.item])
 
     if (!openScanner) {
         return (
@@ -98,8 +109,12 @@ export function NewItem(props) {
                     selectedLocations={selectedLocations}
                     setSelectedLocations={setSelectedLocations} 
                     handleSubmit={handleSubmit}
+                    setCategoryModalOpen={setCategoryModalOpen}
+                    setLocationModalOpen={setLocationModalOpen}
                     {...props}
                 />
+                <NewCategoryModal categoryModalOpen={categoryModalOpen} onCategoryClose={onCategoryClose} item={props.item} setSelectedCategories={setSelectedCategories} {...props} />
+                <NewLocationModal locationModalOpen={locationModalOpen} onLocationClose={onLocationClose} item={props.item} setSelectedLocations={setSelectedLocations} {...props} />
             </div>
         );
     } else {

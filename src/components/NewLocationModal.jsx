@@ -40,6 +40,7 @@ export function NewLocationModal(props) {
             })
             const data = await res.json()
             console.log(data)
+            props.setSelectedLocations([newLocation])
             props.onLocationClose()
         } catch (error) {
             if (error.response) {

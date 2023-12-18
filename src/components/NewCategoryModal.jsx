@@ -40,6 +40,7 @@ export function NewCategoryModal(props) {
             })
             const data = await res.json()
             console.log(data)
+            props.setSelectedCategories([newCategory])
             props.onCategoryClose()
         } catch (error) {
             if (error.response) {

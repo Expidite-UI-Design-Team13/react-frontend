@@ -174,6 +174,10 @@ export function MainPage(props) {
     };
 
     useEffect(() => {
+        localStorage.removeItem('itemName')
+        localStorage.removeItem('itemExpirationDate')
+        localStorage.removeItem('itemImage')
+
         fetchItems();
         let alert = []
         for (let i = 0; i < items.length; i++) {
@@ -261,7 +265,7 @@ export function MainPage(props) {
                     </MenuItem>
 
                 ))}
-                {alertItems && (
+                {alertItems.length === 0 && (
                     <MenuItem sx={{color: "#555B6E"}}>
                         No notifications today.
                     </MenuItem>

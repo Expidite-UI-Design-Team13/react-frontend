@@ -12,14 +12,12 @@ import {
 import AddIcon from '@mui/icons-material/Add';
 import { ButtonDropDown } from './ButtonDropDown';
 import HighlightOffRoundedIcon from '@mui/icons-material/HighlightOffRounded';
-import { NewCategoryModal } from "./NewCategoryModal";
-import { NewLocationModal } from "./NewLocationModal";
+
 
 export function ItemForm(props) {
     const [categories, setCategories] = useState([]);
     const [locations, setLocations] = useState([]);
-    const [categoryModalOpen, setCategoryModalOpen] = useState(false)
-    const [locationModalOpen, setLocationModalOpen] = useState(false)
+
 
     const fileInput = useRef();
 
@@ -82,19 +80,11 @@ export function ItemForm(props) {
     }
 
     const handleAddCategory = () => {
-        setCategoryModalOpen(true)
-    }
-
-    const onCategoryClose = () => {
-        setCategoryModalOpen(false)
+        props.setCategoryModalOpen(true)
     }
 
     const handleAddLocation = () => {
-        setLocationModalOpen(true)
-    }
-
-    const onLocationClose = () => {
-        setLocationModalOpen(false)
+        props.setLocationModalOpen(true)
     }
 
     useEffect(() => {
@@ -112,12 +102,15 @@ export function ItemForm(props) {
                             variant="outlined"
                             value={props.name}
                             size='small'
-                            onChange={e => props.setName(e.target.value)}
+                            onChange={(e) => {
+                                props.setName(e.target.value)
+                                localStorage.setItem('itemName', e.target.value)
+                            }}
                         />
                     </Stack>
                     <Stack direction="row" spacing={2} alignItems="top" sx={{ mt: 0 }}>
                         <Box sx={{ fontSize: '18px', color: '#2A2E38' }}>Picture:</Box>
-                        {props.image === '' ? (
+                        {props.image === '' || props.image === null ? (
                             <IconButton onClick={() => {
                                 fileInput.current.click();
                             }}>
@@ -130,9 +123,11 @@ export function ItemForm(props) {
                                 <Box sx={{ backgroundColor: "white", width: '97px', height: '125px', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                                     <HighlightOffRoundedIcon
                                         sx={{ color: '#555B6E', fontSize: '16px', position: 'absolute', marginLeft: 12, marginBottom: 15.5 }}
-                                        onClick={() => props.setImage('')}
+                                        onClick={() => {props.setImage('')
+                                            localStorage.removeItem('itemImage')
+                                        }}
                                     />
-                                    {props.image.startsWith("http") ? (
+                                    {props.image && props.image.startsWith("http") ? (
                                         <img src={props.image} width='97px' />
                                     ) : (
                                         <img src={require(`../components/images/${props.image}`)} width='97px' />
@@ -144,7 +139,10 @@ export function ItemForm(props) {
                             hidden
                             accept="image/*"
                             ref={fileInput}
-                            onChange={() => props.setImage(fileInput.current.files[0].name)}
+                            onChange={() => {
+                                props.setImage(fileInput.current.files[0].name)
+                                localStorage.setItem('itemImage', fileInput.current.files[0].name)
+                            }}
                         />
                     </Stack>
                     <FormControl>
@@ -232,8 +230,6 @@ export function ItemForm(props) {
                     </Button>
                 </Box>
             </Box>
-            <NewCategoryModal categoryModalOpen={categoryModalOpen} onCategoryClose={onCategoryClose} {...props} />
-            <NewLocationModal locationModalOpen={locationModalOpen} onLocationClose={onLocationClose} {...props} />
         </div>
     )
 }

@@ -24,10 +24,22 @@ export function ScanningPage (props) {
             `https://world.openfoodfacts.org/api/v0/product/${barcode}.json`
         )
         .then((response) => {
-            const productName = response.data.product.product_name;
-            const expirationDate = response.data.product.expiration_date;
-            const productImage = response.data.product.image_front_url;
+            let productName = ''
+            if (response.data.product.product_name)
+                productName = response.data.product.product_name;
+        
+            let expirationDate = ''
+            if (response.data.product.expiration_date)
+                expirationDate = response.data.product.expiration_date
+
+            let productImage = ''
+            if (response.data.product.image_front_url)
+                productImage = response.data.product.image_front_url
+
             setItem({ ...item, name: productName, expiration_date: expirationDate, image: productImage});
+            localStorage.setItem('itemName', item.name)
+            localStorage.setItem('itemExpirationDate', expirationDate)
+            localStorage.setItem('itemImage', productImage)
         })
         .catch((error) => {
             console.error("Error retrieving item:", error);
