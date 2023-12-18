@@ -100,7 +100,7 @@ export function ItemCard(props) {
     return (
         <Card className="item-card" sx={{ width: 170, height: 170, mb: 2, borderRadius: 3, backgroundColor: '#FAF9F9', boxShadow: 4 }}>
             <Typography className="item-title" color="#555B6E" align="center" gutterBottom="true" variant="subtitle1" fontFamily={"'Lato', sans-serif"} component="div">
-                {props.product.name}
+                {props.product.name.length > 18 ? props.product.name.substring(0, 18) + '...' : props.product.name}
             </Typography>
             <Avatar className="item-avatar" alt={props.product.name} src={
                 (props.product.image === null || props.product.image === '') ?
